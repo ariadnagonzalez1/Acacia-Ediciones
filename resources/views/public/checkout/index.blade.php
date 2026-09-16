@@ -52,9 +52,9 @@
                 </p>
 
 
-                <form
-                    action="#"
-                    method="POST"
+                <form 
+                    action="{{ route('mercadopago.crear') }}" 
+                    method="POST" 
                     class="checkout-form"
                 >
 

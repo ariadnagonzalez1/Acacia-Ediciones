@@ -76,8 +76,17 @@ Route::get(
     [InicioController::class, 'showKit']
 )->name('kit.show');
 
-Route::post('/checkout/mercadopago', [MercadoPagoController::class, 'crearOrden'])
-    ->name('mercadopago.crear');
+Route::get('/checkout/exito', [PagoController::class, 'exito'])
+    ->name('pago.exito');
+
+Route::get('/checkout/pendiente', [PagoController::class, 'pendiente'])
+    ->name('pago.pendiente');
+
+Route::get('/checkout/error', [PagoController::class, 'error'])
+    ->name('pago.error');
+
+Route::post('/checkout/webhook', [MercadoPagoController::class, 'webhook'])
+    ->name('mercadopago.webhook');
 
 /*
 |--------------------------------------------------------------------------
