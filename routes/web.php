@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\ClienteController;
 
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\AdminPasswordController;
+use App\Http\Controllers\MercadoPagoController;
 
 
 /*
@@ -74,6 +75,9 @@ Route::get(
     '/kit/{promocion}',
     [InicioController::class, 'showKit']
 )->name('kit.show');
+
+Route::post('/checkout/mercadopago', [MercadoPagoController::class, 'crearOrden'])
+    ->name('mercadopago.crear');
 
 /*
 |--------------------------------------------------------------------------
