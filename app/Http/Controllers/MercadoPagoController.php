@@ -9,6 +9,16 @@ use Illuminate\Support\Str;
 
 class MercadoPagoController extends Controller
 {
+    
+    public function mediosPago()
+{
+    $response = Http::withToken(
+        config('services.mercadopago.access_token')
+    )->get('https://api.mercadopago.com/v1/payment_methods');
+
+    dd($response->json());
+}
+
     public function crearOrden(Request $request)
     {
         $datos = $request->validate([
@@ -89,14 +99,13 @@ class MercadoPagoController extends Controller
             'items' => $items,
 
             'config' => [
-                'notification_url' => route('mercadopago.webhook'),
-                'online' => [
-                    'success_url' => route('pago.exito') . '?external_reference=' . $externalReference,
-                    'failure_url' => route('pago.error'),
-                    'pending_url' => route('pago.pendiente') . '?external_reference=' . $externalReference,
-                    'auto_return' => 'approved',
-                ],
-            ],
+    'online' => [
+        'success_url' => route('pago.exito') . '?external_reference=' . $externalReference,
+        'failure_url' => route('pago.error'),
+        'pending_url' => route('pago.pendiente') . '?external_reference=' . $externalReference,
+        'auto_return' => 'approved',
+    ],
+],
         ];
 
         $response = Http::withToken(
