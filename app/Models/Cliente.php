@@ -17,15 +17,7 @@ class Cliente extends Model
         'documento',
         'email',
         'telefono',
-        'acepta_promociones',
     ];
-
-    protected function casts(): array
-    {
-        return [
-            'acepta_promociones' => 'boolean',
-        ];
-    }
 
     public function ventas(): HasMany
     {

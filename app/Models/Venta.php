@@ -15,19 +15,21 @@ class Venta extends Model
     protected $table = 'ventas';
 
     protected $fillable = [
-        'cliente_id',
-        'numero_orden',
-        'total',
-        'fecha_pago',
-    ];
+    'cliente_id',
+    'numero_orden',
+    'total',
+    'fecha_pago',
+    'correo_enviado_at',
+];
 
     protected function casts(): array
-    {
-        return [
-            'total' => 'decimal:2',
-            'fecha_pago' => 'datetime',
-        ];
-    }
+{
+    return [
+        'total' => 'decimal:2',
+        'fecha_pago' => 'datetime',
+        'correo_enviado_at' => 'datetime',
+    ];
+}
 
     public function cliente(): BelongsTo
     {

@@ -45,12 +45,12 @@ class Libro extends Model
     }
 
     public function promociones(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Promocion::class,
-            'libro_promocion'
-        )->withTimestamps();
-    }
+{
+    return $this->belongsToMany(
+        Promocion::class,
+        'libro_promocion'
+    );
+}
 
     public function ventaDetalles(): HasMany
     {
