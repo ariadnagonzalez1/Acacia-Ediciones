@@ -13,13 +13,14 @@ class Pago extends Model
     protected $table = 'pagos';
 
     protected $fillable = [
-        'venta_id',
-        'mercado_pago_payment_id',
-        'mercado_pago_preference_id',
-        'monto',
-        'metodo_pago',
-        'fecha_pago',
-    ];
+    'venta_id',
+    'mercado_pago_order_id',
+    'mercado_pago_payment_id',
+    'mercado_pago_preference_id',
+    'monto',
+    'metodo_pago',
+    'fecha_pago',
+];
 
     protected function casts(): array
     {
