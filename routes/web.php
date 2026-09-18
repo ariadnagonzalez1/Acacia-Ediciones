@@ -17,8 +17,9 @@ use App\Http\Controllers\Admin\ClienteController;
 
 use App\Http\Controllers\Auth\AdminLoginController;
 use App\Http\Controllers\Auth\AdminPasswordController;
-use App\Http\Controllers\MercadoPagoController;
 
+use App\Http\Controllers\MercadoPagoController;
+use App\Http\Controllers\Public\PagoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,41 +30,104 @@ use App\Http\Controllers\MercadoPagoController;
 Route::get('/', [InicioController::class, 'index'])
     ->name('inicio');
 
+
 Route::get('/catalogo', [CatalogoController::class, 'index'])
     ->name('catalogo');
 
+
 Route::get('/carrito', [CarritoController::class, 'index'])
     ->name('carrito.index');
+
 
 Route::post(
     '/carrito/libro/{libro}',
     [CarritoController::class, 'agregarLibro']
 )->name('carrito.libro.agregar');
 
+
 Route::post(
     '/carrito/kit/{promocion}',
     [CarritoController::class, 'agregarKit']
 )->name('carrito.kit.agregar');
+
 
 Route::patch(
     '/carrito/{clave}/cantidad',
     [CarritoController::class, 'actualizarCantidad']
 )->name('carrito.cantidad');
 
+
 Route::delete(
     '/carrito/{clave}',
     [CarritoController::class, 'eliminar']
 )->name('carrito.eliminar');
+
 
 Route::delete(
     '/carrito',
     [CarritoController::class, 'vaciar']
 )->name('carrito.vaciar');
 
+
+/*
+|--------------------------------------------------------------------------
+| CHECKOUT
+|--------------------------------------------------------------------------
+*/
+
 Route::get(
     '/checkout',
     [CheckoutController::class, 'index']
 )->name('checkout.index');
+
+
+Route::post(
+    '/checkout/mercadopago',
+    [MercadoPagoController::class, 'crearOrden']
+)->name('mercadopago.crear');
+
+
+/*
+|--------------------------------------------------------------------------
+| RESULTADOS DEL PAGO
+|--------------------------------------------------------------------------
+*/
+
+Route::get(
+    '/checkout/exito',
+    [PagoController::class, 'exito']
+)->name('pago.exito');
+
+
+Route::get(
+    '/checkout/pendiente',
+    [PagoController::class, 'pendiente']
+)->name('pago.pendiente');
+
+
+Route::get(
+    '/checkout/error',
+    [PagoController::class, 'error']
+)->name('pago.error');
+
+
+/*
+|--------------------------------------------------------------------------
+| WEBHOOK MERCADO PAGO
+|--------------------------------------------------------------------------
+*/
+
+Route::post(
+    '/checkout/webhook',
+    [MercadoPagoController::class, 'webhook']
+)->name('mercadopago.webhook');
+
+
+/*
+|--------------------------------------------------------------------------
+| DETALLE DE LIBROS Y KITS
+|--------------------------------------------------------------------------
+*/
 
 Route::get(
     '/libro/{libro}',
@@ -76,17 +140,6 @@ Route::get(
     [InicioController::class, 'showKit']
 )->name('kit.show');
 
-Route::get('/checkout/exito', [PagoController::class, 'exito'])
-    ->name('pago.exito');
-
-Route::get('/checkout/pendiente', [PagoController::class, 'pendiente'])
-    ->name('pago.pendiente');
-
-Route::get('/checkout/error', [PagoController::class, 'error'])
-    ->name('pago.error');
-
-Route::post('/checkout/webhook', [MercadoPagoController::class, 'webhook'])
-    ->name('mercadopago.webhook');
 
 /*
 |--------------------------------------------------------------------------
@@ -111,6 +164,7 @@ Route::prefix('admin')
                 'showLogin'
             ])->name('login');
 
+
             Route::post('/login', [
                 AdminLoginController::class,
                 'login'
@@ -122,6 +176,7 @@ Route::prefix('admin')
                 'showForgotPassword'
             ])->name('password.request');
 
+
             Route::post('/forgot-password', [
                 AdminPasswordController::class,
                 'sendResetLink'
@@ -132,6 +187,7 @@ Route::prefix('admin')
                 AdminPasswordController::class,
                 'showResetPassword'
             ])->name('password.reset');
+
 
             Route::post('/reset-password', [
                 AdminPasswordController::class,
@@ -154,22 +210,38 @@ Route::prefix('admin')
             ])->name('dashboard');
 
 
-            Route::resource('libros', LibroController::class)
-                ->except('show');
+            Route::resource(
+                'libros',
+                LibroController::class
+            )->except('show');
 
-            Route::resource('categorias', CategoriaController::class)
-                ->except('show');
 
-            Route::resource('promociones', PromocionController::class)
-            ->except('show')
-            ->parameters([
-                'promociones' => 'promocion',
-            ]);
+            Route::resource(
+                'categorias',
+                CategoriaController::class
+            )->except('show');
+
+
+            Route::resource(
+                'promociones',
+                PromocionController::class
+            )
+                ->except('show')
+                ->parameters([
+                    'promociones' => 'promocion',
+                ]);
+
+            Route::post(
+                '/promociones/{promocion}/enviar-correo',
+                [PromocionController::class, 'enviarCorreo']
+            )->name('promociones.enviarCorreo');
+
 
             Route::get('/correos', [
                 CorreoAutomaticoController::class,
                 'index'
             ])->name('correos.index');
+
 
             Route::put('/correos/{correo}', [
                 CorreoAutomaticoController::class,

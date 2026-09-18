@@ -22,10 +22,7 @@
             </p>
         </div>
 
-        <a
-            href="{{ route('admin.promociones.create') }}"
-            class="admin-link-button"
-        >
+        <a href="{{ route('admin.promociones.create') }}" class="admin-link-button">
             + Nueva promoción
         </a>
 
@@ -109,27 +106,26 @@
 
                         <div class="promotion-actions">
 
-                            <a
-                                href="{{ route('admin.promociones.edit', $promocion) }}"
-                                class="table-action-button table-action-edit"
-                            >
+                            <a href="{{ route('admin.promociones.edit', $promocion) }}" class="table-action-button table-action-edit">
                                 Editar
                             </a>
 
 
-                            <form
-                                action="{{ route('admin.promociones.destroy', $promocion) }}"
-                                method="POST"
-                                class="form-eliminar"
-                                data-nombre="{{ $promocion->nombre }}"
-                            >
+                            <form action="{{ route('admin.promociones.enviarCorreo', $promocion) }}" method="POST">
+                                @csrf
+
+                                <button type="submit" class="table-action-button">
+                                    Enviar correo
+                                </button>
+
+                            </form>
+
+
+                            <form action="{{ route('admin.promociones.destroy', $promocion) }}" method="POST" class="form-eliminar" data-nombre="{{ $promocion->nombre }}">
                                 @csrf
                                 @method('DELETE')
 
-                                <button
-                                    type="submit"
-                                    class="table-action-button table-action-delete"
-                                >
+                                <button type="submit" class="table-action-button table-action-delete">
                                     Eliminar
                                 </button>
 

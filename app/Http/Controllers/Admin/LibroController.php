@@ -95,7 +95,7 @@ class LibroController extends Controller
             'archivo_pdf' => [
                 'required',
                 'file',
-                'mimes:pdf',
+                'mimes:pdf,doc,docx',
                 'max:51200',
             ],
 
@@ -205,7 +205,7 @@ class LibroController extends Controller
             'archivo_pdf' => [
                 'nullable',
                 'file',
-                'mimes:pdf',
+                'mimes:pdf,doc,docx',
                 'max:51200',
             ],
 

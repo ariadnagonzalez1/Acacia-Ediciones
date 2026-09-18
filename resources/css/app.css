@@ -1018,6 +1018,63 @@ a {
     margin-top: 8px;
 }
 
+.current-file-icon {
+    width: 48px;
+    height: 60px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background: var(--acacia-green-soft);
+    color: var(--acacia-dark);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.current-file-preview>div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.current-file-name {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--acacia-dark);
+    overflow-wrap: anywhere;
+}
+
+.current-file-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin-top: 4px;
+    padding: 6px 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: white;
+    color: var(--acacia-dark);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.current-file-link:hover {
+    background: var(--acacia-green-soft);
+    border-color: var(--acacia-green);
+    text-decoration: none;
+}
+
+.current-file-note {
+    font-size: 11px;
+    color: var(--muted);
+}
+
 
 /* =========================================================
    PAGINACIÓN

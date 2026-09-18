@@ -7,6 +7,7 @@ use App\Models\Libro;
 use App\Models\Promocion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\EnviarCorreoPromocion;
 
 class PromocionController extends Controller
 {
@@ -313,6 +314,18 @@ class PromocionController extends Controller
             ->with(
                 'success',
                 'Promoción eliminada correctamente.'
+            );
+    }
+
+        public function enviarCorreo(Promocion $promocion)
+    {
+        EnviarCorreoPromocion::dispatch($promocion->id);
+
+        return redirect()
+            ->route('admin.promociones.index')
+            ->with(
+                'success',
+                'El envío del correo de promoción se puso en cola.'
             );
     }
 }

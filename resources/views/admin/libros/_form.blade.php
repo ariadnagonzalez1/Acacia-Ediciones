@@ -284,7 +284,7 @@
                 >
 
                 <span>
-                    Portada actual
+                    Portada actual — seleccioná un archivo solo si querés reemplazarla
                 </span>
 
             </div>
@@ -303,21 +303,53 @@
     <div class="form-group">
 
         <label for="archivo_pdf">
-            Archivo PDF
+            Archivo del ebook (PDF o Word)
         </label>
 
         <input
             type="file"
             id="archivo_pdf"
             name="archivo_pdf"
-            accept=".pdf"
+            accept=".pdf,.doc,.docx"
             {{ $libro ? '' : 'required' }}
         >
 
         @if($libro?->archivo_pdf)
 
-            <div class="current-file-info">
-                PDF cargado actualmente
+            @php
+                $extensionArchivo = strtolower(
+                    pathinfo($libro->archivo_pdf, PATHINFO_EXTENSION)
+                );
+
+                $nombreArchivo = basename($libro->archivo_pdf);
+            @endphp
+
+            <div class="current-file-preview">
+
+                <div class="current-file-icon">
+                    {{ $extensionArchivo === 'pdf' ? 'PDF' : 'DOC' }}
+                </div>
+
+                <div>
+
+                    <span class="current-file-name">
+                        {{ $nombreArchivo }}
+                    </span>
+
+                    <a
+                        href="{{ asset('storage/' . $libro->archivo_pdf) }}"
+                        target="_blank"
+                        class="current-file-link"
+                    >
+                        Ver archivo actual
+                    </a>
+
+                    <span class="current-file-note">
+                        Seleccioná un archivo solo si querés reemplazarlo
+                    </span>
+
+                </div>
+
             </div>
 
         @endif
